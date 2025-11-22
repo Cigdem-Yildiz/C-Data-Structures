@@ -35,7 +35,7 @@ C-Data-Structures/
 - C’de hafıza yönetimi pratiği yapmak
 - Temiz, anlaşılır ve sürdürülebilir implementasyonlar yazmak
 
-## 🛠 Kullanılan Araçlar
+## Kullanılan Araçlar
 
 - MSYS2 / MinGW
 - VS Code
