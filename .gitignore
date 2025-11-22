@@ -1,0 +1,36 @@
+# --- C / C++ Build Files
+*.exe
+*.out
+*.o
+*.a
+*.so
+*.dll
+*.dylib
+*.pdb
+*.dbg
+*.stackdump
+a.out
+
+# --- Build Folders
+build/
+bin/
+obj/
+dist/
+
+# --- VS Code
+.vscode/
+*.code-workspace
+
+# --- CMake
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# --- Logs
+*.log
+
+# --- Editors / OS
+*.swp
+*.swo
+.DS_Store
