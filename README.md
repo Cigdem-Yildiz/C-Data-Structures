@@ -39,4 +39,3 @@ C-Data-Structures/
 
 - MSYS2 / MinGW
 - VS Code
-- Code::Blocks (ders ortamı için)
