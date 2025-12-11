@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "node_lib1.h"
+#include "node_lib.h"
 
 NODE *head = NULL;
 
