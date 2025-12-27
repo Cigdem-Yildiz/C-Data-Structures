@@ -9,7 +9,7 @@ Aşağıdaki yapı örnektir; içerik geliştikçe güncellenecektir.
 ```
 C-Data-Structures/
 ├── linked-list/
-├── DynamicArray/
+├── dynamic-array/
 ├── stack/
 ├── .gitignore
 ├── LICENSE
