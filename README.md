@@ -8,7 +8,12 @@ Aşağıdaki yapı örnektir; içerik geliştikçe güncellenecektir.
 
 ```
 C-Data-Structures/
-└── linked-list/
+├── linked-list/
+├── DynamicArray/
+├── stack/
+├── .gitignore
+├── LICENSE
+└── README.md
 ```
 
 ## İçerik
