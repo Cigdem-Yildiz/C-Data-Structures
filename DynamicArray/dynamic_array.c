@@ -86,9 +86,7 @@ void *removeAt(DynamicArr *arr, int index)
 
 int isEmpty(DynamicArr *arr)
 {
-    if (!arr)
-        return -1;
-    if (arr->size == 0)
+    if (!arr || arr->size == 0)
         return 1;
     return 0;
 }
