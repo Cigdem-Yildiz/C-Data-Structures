@@ -1,4 +1,4 @@
-#include "../DynamicArray/dynamic_array.h"
+#include "../dynamic-array/dynamic_array.h"
 
 typedef struct
 {
