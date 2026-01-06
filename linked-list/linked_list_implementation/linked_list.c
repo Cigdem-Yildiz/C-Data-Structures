@@ -2,11 +2,14 @@
 #include <stdio.h>
 #include "linked_list_imp_lib.h"
 
-int compareInt(void *arg1, void *arg2)
+int compare(void *arg1, void *arg2)
 {
-    if (*(int *)arg1 > *(int *)arg2)
+    int value1 = *(int *)arg1;
+    int value2 = *(int *)arg2;
+
+    if (value1 > value2)
         return 1;
-    else if (*(int *)arg1 == *(int *)arg2)
+    else if (value1 == value2)
         return 0;
     else
         return -1;
@@ -14,24 +17,31 @@ int compareInt(void *arg1, void *arg2)
 
 int main()
 {
-    int num1 = 7, num2 = 9, num3 = 5, num4 = 60, num5 = 89;
-    LList *list = createList(compareInt);
-    printf("count: %d\n", list->count);
-    append(list, (void *)&num1, 0);
-    append(list, (void *)&num2, 0);
-    append(list, (void *)&num3, 1);
-    append(list, (void *)&num4, list->count);
-    append(list, (void *)&num5, 0);
+    LList *list = createList(compare);
+
+    int a = 0, b = 1, c = 2, d = 3, e = 4;
+    void *pa = &a, *pb = &b, *pc = &c, *pd = &d, *pe = &e;
+    append(list, pa, 0);
+    append(list, pb, 0);
+    append(list, pc, 0);
+    append(list, pd, 0);
+    append(list, pe, 0);
 
     NODE *temp = list->head;
-    printf("List elements: ");
-    for (int i = 0; i < 5; i++)
+
+    while (temp->next != NULL)
     {
         printf("%d ", *(int *)temp->dataPtr);
         temp = temp->next;
     }
-    printf("deneme: %x %x", (list->head)->dataPtr, (*list->head).dataPtr);
-    printf("\ncompare result: %d", compareInt((void *)&num1, (void *)&num2));
+    printf("%d ", *(int *)temp->dataPtr);
+
+    bool flag = deleteNode(list, pd);
+
+    if (flag)
+        printf("true");
+    else
+        printf("false");
 
     return 0;
 }

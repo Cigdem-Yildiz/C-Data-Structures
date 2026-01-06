@@ -1,10 +1,10 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-typedef struct Node
+typedef struct NODE
 {
     void *dataPtr;
-    struct Node *next;
+    struct NODE *next;
 } NODE;
 
 typedef struct LinkedList
@@ -31,8 +31,10 @@ LList *createList(int (*compare)(void *arg1, void *arg2))
 NODE *append(LList *list, void *data, int index)
 {
     NODE *node = (NODE *)malloc(sizeof(NODE));
+
     if (!list || !node || index > list->count || index < 0)
         return 0;
+
     node->dataPtr = data;
 
     NODE **ite = &list->head;
@@ -50,15 +52,66 @@ NODE *append(LList *list, void *data, int index)
     return node;
 }
 
-int deleteNode(LList *list, void *arg)
-{
-    return 0;
-}
-
-bool _search(LList *list, NODE **preN, NODE **locN, void *arg)
+bool _search(LList *list, void *arg, NODE **preOut, NODE **curOut)
 {
     if (!list || list->count == 0)
     {
         return false;
     }
+
+    preOut = curOut = NULL;
+
+    NODE *pPre = NULL;
+    NODE *pLoc = list->head;
+
+    while (pLoc)
+    {
+        if (pLoc->dataPtr == arg)
+        {
+            *preOut = pPre; // Segmentation fault veriyo
+            *curOut = pLoc;
+            return true;
+        }
+
+        pPre = pLoc;
+        pLoc = pLoc->next;
+    }
+
+    *curOut = *preOut = NULL;
+
+    return false;
+}
+
+bool searchList(LList *list, void *arg, NODE **outNode)
+{
+    NODE **pPre;
+    bool found = _search(list, arg, pPre, outNode);
+
+    if (!found)
+        return false;
+
+    return true;
+}
+
+bool _delete(NODE **pPre, NODE **pLoc)
+{
+    if (!(*pLoc)->next)
+    {
+        (*pPre)->next = NULL;
+        return true;
+    }
+    (*pPre)->next = (*pLoc)->next;
+    return true;
+}
+
+bool deleteNode(LList *list, void *arg)
+{
+    NODE **pPre = NULL, **pLoc = NULL;
+
+    bool found = _search(list, arg, pPre, pLoc);
+
+    if (!found || !_delete(pPre, pLoc))
+        return false;
+
+    return true;
 }
