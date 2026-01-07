@@ -15,7 +15,7 @@ typedef struct LinkedList
     int (*deconstructor)();
 } LList;
 
-LList *createList(int (*compare)(void *arg1, void *arg2))
+LList *createList(int (*compare)(void *arg1, void *arg2), int (*deconstructor)())
 {
     LList *list = (LList *)malloc(sizeof(LList));
     if (!list)
@@ -24,7 +24,7 @@ LList *createList(int (*compare)(void *arg1, void *arg2))
     list->count = 0;
     list->head = NULL;
     list->compare = compare;
-    // list->deconstructor = deconstructor;
+    list->deconstructor = deconstructor;
     return list;
 }
 
@@ -59,8 +59,6 @@ bool _search(LList *list, void *arg, NODE **preOut, NODE **curOut)
         return false;
     }
 
-    preOut = curOut = NULL;
-
     NODE *pPre = NULL;
     NODE *pLoc = list->head;
 
@@ -68,8 +66,9 @@ bool _search(LList *list, void *arg, NODE **preOut, NODE **curOut)
     {
         if (pLoc->dataPtr == arg)
         {
-            *preOut = pPre; // Segmentation fault veriyo
-            *curOut = pLoc;
+            preOut = &pPre;
+            curOut = &pLoc;
+
             return true;
         }
 

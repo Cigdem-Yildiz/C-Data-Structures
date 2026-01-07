@@ -15,9 +15,16 @@ int compare(void *arg1, void *arg2)
         return -1;
 }
 
+int deconstructor()
+{
+}
+
 int main()
 {
-    LList *list = createList(compare);
+    // int x = 7;
+    // int *p;
+
+    LList *list = createList(compare, deconstructor);
 
     int a = 0, b = 1, c = 2, d = 3, e = 4;
     void *pa = &a, *pb = &b, *pc = &c, *pd = &d, *pe = &e;
