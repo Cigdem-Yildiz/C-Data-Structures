@@ -1,21 +1,21 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-typedef struct NODE
+typedef struct Node
 {
     void *dataPtr;
-    struct NODE *next;
-} NODE;
+    struct Node *next;
+} Node;
 
 typedef struct LinkedList
 {
-    NODE *head;
+    Node *head;
     int count;
     int (*compare)(void *arg1, void *arg2);
-    int (*deconstructor)();
+    int (*deconstructor)(void *);
 } LList;
 
-LList *createList(int (*compare)(void *arg1, void *arg2), int (*deconstructor)())
+LList *create_list(int (*compare)(void *arg1, void *arg2), int (*deconstructor)())
 {
     LList *list = (LList *)malloc(sizeof(LList));
     if (!list)
@@ -28,16 +28,16 @@ LList *createList(int (*compare)(void *arg1, void *arg2), int (*deconstructor)()
     return list;
 }
 
-NODE *append(LList *list, void *data, int index)
+Node *append(LList *list, void *data, int index)
 {
-    NODE *node = (NODE *)malloc(sizeof(NODE));
+    Node *node = (Node *)malloc(sizeof(Node));
 
     if (!list || !node || index > list->count || index < 0)
         return 0;
 
     node->dataPtr = data;
 
-    NODE **ite = &list->head;
+    Node **ite = &list->head;
 
     for (int i = 0; i < index; i++)
     {
@@ -52,22 +52,22 @@ NODE *append(LList *list, void *data, int index)
     return node;
 }
 
-bool _search(LList *list, void *arg, NODE **preOut, NODE **curOut)
+bool _search(LList *list, void *arg, Node **preOut, Node **curOut)
 {
     if (!list || list->count == 0)
     {
         return false;
     }
 
-    NODE *pPre = NULL;
-    NODE *pLoc = list->head;
+    Node *pPre = NULL;
+    Node *pLoc = list->head;
 
     while (pLoc)
     {
         if (pLoc->dataPtr == arg)
         {
-            preOut = &pPre;
-            curOut = &pLoc;
+            *preOut = pPre;
+            *curOut = pLoc;
 
             return true;
         }
@@ -81,10 +81,10 @@ bool _search(LList *list, void *arg, NODE **preOut, NODE **curOut)
     return false;
 }
 
-bool searchList(LList *list, void *arg, NODE **outNode)
+bool search_list(LList *list, void *arg, Node **outNode)
 {
-    NODE **pPre;
-    bool found = _search(list, arg, pPre, outNode);
+    Node *tempPre;
+    bool found = _search(list, arg, &tempPre, outNode);
 
     if (!found)
         return false;
@@ -92,25 +92,53 @@ bool searchList(LList *list, void *arg, NODE **outNode)
     return true;
 }
 
-bool _delete(NODE **pPre, NODE **pLoc)
+bool _delete(LList *list, Node **pPre, Node **pLoc)
 {
-    if (!(*pLoc)->next)
+    if (!(*pPre))
     {
-        (*pPre)->next = NULL;
+        list->head = (*pLoc)->next;
         return true;
     }
+
     (*pPre)->next = (*pLoc)->next;
+
     return true;
 }
 
-bool deleteNode(LList *list, void *arg)
+bool delete_node(LList *list, void *arg)
 {
-    NODE **pPre = NULL, **pLoc = NULL;
+    Node *pPre, *pLoc;
 
-    bool found = _search(list, arg, pPre, pLoc);
+    bool found = _search(list, arg, &pPre, &pLoc);
 
-    if (!found || !_delete(pPre, pLoc))
+    if (!found || !_delete(list, &pPre, &pLoc))
         return false;
 
+    list->count--;
+
     return true;
+}
+
+bool destroy_list(LList *list)
+{
+}
+
+bool is_empty(LList *list)
+{
+    if (list)
+        return true;
+    else
+        return false;
+}
+
+int list_count(LList *list)
+{
+    if (!is_empty)
+        return list->count;
+    else
+        return 0;
+}
+
+void reverse_list(LList *list)
+{
 }

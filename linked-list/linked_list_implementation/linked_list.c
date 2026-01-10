@@ -15,40 +15,49 @@ int compare(void *arg1, void *arg2)
         return -1;
 }
 
-int deconstructor()
+int free(void *arg)
 {
+}
+
+void print_list(LList *list)
+{
+    Node *pWalk = list->head;
+    while (pWalk != NULL)
+    {
+        int *veri = (int *)pWalk->dataPtr;
+
+        printf("[%d] -> ", *veri);
+
+        pWalk = pWalk->next;
+    }
+    printf("NULL\n");
 }
 
 int main()
 {
-    // int x = 7;
-    // int *p;
+    LList *list = create_list(compare, free);
 
-    LList *list = createList(compare, deconstructor);
-
-    int a = 0, b = 1, c = 2, d = 3, e = 4;
-    void *pa = &a, *pb = &b, *pc = &c, *pd = &d, *pe = &e;
+    int a = 0, b = 1, c = 2, d = 3, e = 4, f = 5;
+    void *pa = &a, *pb = &b, *pc = &c, *pd = &d, *pe = &e, *pf = &f;
     append(list, pa, 0);
     append(list, pb, 0);
     append(list, pc, 0);
     append(list, pd, 0);
     append(list, pe, 0);
 
-    NODE *temp = list->head;
+    print_list(list);
 
-    while (temp->next != NULL)
-    {
-        printf("%d ", *(int *)temp->dataPtr);
-        temp = temp->next;
-    }
-    printf("%d ", *(int *)temp->dataPtr);
+    delete_node(list, pd);
+    delete_node(list, pa);
 
-    bool flag = deleteNode(list, pd);
+    print_list(list);
 
-    if (flag)
-        printf("true");
-    else
-        printf("false");
+    append(list, pa, 1);
+
+    print_list(list);
+
+    Node *pout;
+    printf(search_list(list, pf, &pout) ? "True" : "False");
 
     return 0;
 }

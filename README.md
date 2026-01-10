@@ -13,13 +13,19 @@ C-Data-Structures/
 ├── dynamic-array/          # Generic Dynamic Array implementation
 │   ├── dynamic_array.c
 │   └── dynamic_array.h
+├── linked-list/            # Singly Linked List
+│   ├── linked_list_implementation/
+│   │   ├── linked_list_imp_lib.h
+│   │   └── linked_list.c
+│   ├── node_trial/
+│   │   ├── node_lib.h
+│   │   └── node.c
 ├── stack/                  # Stack implementations
 │   ├── array_based_implementation/
 │   │   ├── stack.c
 │   │   ├── stack.h
 │   │   └── main.c          # Test file for Stack
-│   └──  linked_list_based_implementation
-├── linked-list/            # Singly Linked List
+│   └──  linked_list_based_implementation/
 ├── .gitignore
 └── README.md
 ```
