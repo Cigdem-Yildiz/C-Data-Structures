@@ -47,7 +47,7 @@ Node *append(LList *list, void *data, int index)
     node->next = *ite;
     *ite = node;
 
-    list->count = list->count + 1;
+    list->count++;
 
     return node;
 }
@@ -114,7 +114,7 @@ bool delete_node(LList *list, void *arg)
     if (!found || !_delete(list, &pPre, &pLoc))
         return false;
 
-    list->count -= 1;
+    list->count--;
 
     return true;
 }
