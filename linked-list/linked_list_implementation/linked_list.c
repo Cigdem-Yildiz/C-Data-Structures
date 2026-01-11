@@ -1,69 +1,169 @@
 #include <stdlib.h>
-#include <stdio.h>
-#include "linked_list_imp_lib.h"
+#include <stdbool.h>
+#include "linked_list.h"
 
-int compare(void *arg1, void *arg2)
+typedef struct Node
 {
-    int value1 = *(int *)arg1;
-    int value2 = *(int *)arg2;
+    void *dataPtr;
+    struct Node *next;
+} Node;
 
-    if (value1 > value2)
-        return 1;
-    else if (value1 == value2)
+typedef struct LinkedList
+{
+    Node *head;
+    int count;
+    int (*compare)(void *arg1, void *arg2);
+    int (*deconstructor)(void *);
+} LList;
+
+LList *create_list(int (*compare)(void *arg1, void *arg2), int (*deconstructor)(void *))
+{
+    LList *list = (LList *)malloc(sizeof(LList));
+    if (!list)
         return 0;
-    else
-        return -1;
+
+    list->count = 0;
+    list->head = NULL;
+    list->compare = compare;
+    list->deconstructor = deconstructor;
+    return list;
 }
 
-int free_data(void *arg)
+Node *append(LList *list, void *data, int index)
 {
-}
+    Node *node = (Node *)malloc(sizeof(Node));
 
-void print_list(LList *list)
-{
-    Node *pWalk = list->head;
-    while (pWalk != NULL)
+    if (!list || !node || index > list->count || index < 0)
+        return NULL;
+
+    node->dataPtr = data;
+
+    Node **ite = &list->head;
+
+    for (int i = 0; i < index; i++)
     {
-        int *veri = (int *)pWalk->dataPtr;
-
-        printf("[%d] -> ", *veri);
-
-        pWalk = pWalk->next;
+        ite = &((*ite)->next);
     }
-    printf("NULL\n");
+
+    node->next = *ite;
+    *ite = node;
+
+    list->count++;
+
+    return node;
 }
 
-int main()
+bool _search(LList *list, void *arg, Node **preOut, Node **curOut)
 {
-    LList *list = create_list(compare, free_data);
+    if (!list || list->count == 0)
+    {
+        return false;
+    }
 
-    int a = 0, b = 1, c = 2, d = 3, e = 4, f = 5;
-    void *pa = &a, *pb = &b, *pc = &c, *pd = &d, *pe = &e, *pf = &f;
-    append(list, pa, 0);
-    append(list, pb, 0);
-    append(list, pc, 0);
-    append(list, pd, 0);
-    append(list, pe, 0);
+    Node *pPre = NULL;
+    Node *pLoc = list->head;
 
-    print_list(list);
+    while (pLoc)
+    {
+        if (pLoc->dataPtr == arg)
+        {
+            *preOut = pPre;
+            *curOut = pLoc;
 
-    delete_node(list, pd);
-    delete_node(list, pa);
+            return true;
+        }
 
-    print_list(list);
+        pPre = pLoc;
+        pLoc = pLoc->next;
+    }
 
-    append(list, pa, 1);
+    *curOut = *preOut = NULL;
 
-    print_list(list);
+    return false;
+}
 
-    Node *pOut;
-    printf(search_list(list, pf, &pOut) ? "True\n" : "False\n");
+bool search_list(LList *list, void *arg, Node **outNode)
+{
+    Node *tempPre;
+    bool found = _search(list, arg, &tempPre, outNode);
 
-    bool is_reversed = reverse_list(list);
+    if (!found)
+        return false;
 
-    printf(is_reversed ? "True\n" : "False\n");
+    return true;
+}
 
-    print_list(list);
+bool _delete(LList *list, Node **pPre, Node **pLoc)
+{
+    if (!(*pPre))
+    {
+        list->head = (*pLoc)->next;
+        return true;
+    }
 
-    return 0;
+    (*pPre)->next = (*pLoc)->next;
+
+    return true;
+}
+
+bool delete_node(LList *list, void *arg)
+{
+    Node *pPre, *pLoc;
+
+    bool found = _search(list, arg, &pPre, &pLoc);
+
+    if (!found || !_delete(list, &pPre, &pLoc))
+        return false;
+
+    list->count--;
+
+    return true;
+}
+
+bool destroy_list(LList *list)
+{
+}
+
+bool is_empty(LList *list)
+{
+    if (list)
+        return true;
+    else
+        return false;
+}
+
+int list_count(LList *list)
+{
+    if (is_empty)
+        return list->count;
+    else
+        return 0;
+}
+
+bool reverse_list(LList *list)
+{
+    if (!list)
+        return false;
+
+    if (list->count == 0)
+    {
+        return true;
+    }
+
+    Node *pPre = NULL, *pLoc = list->head, *pNext = NULL;
+
+    while (pLoc)
+    {
+        pNext = pLoc->next;
+        pLoc->next = pPre;
+        pPre = pLoc;
+        pLoc = pNext;
+        if (!pLoc)
+        {
+            list->head = pPre;
+            break;
+        }
+    }
+
+    return true;
 }
