@@ -15,7 +15,7 @@ int compare(void *arg1, void *arg2)
         return -1;
 }
 
-int free(void *arg)
+int free_data(void *arg)
 {
 }
 
@@ -35,7 +35,7 @@ void print_list(LList *list)
 
 int main()
 {
-    LList *list = create_list(compare, free);
+    LList *list = create_list(compare, free_data);
 
     int a = 0, b = 1, c = 2, d = 3, e = 4, f = 5;
     void *pa = &a, *pb = &b, *pc = &c, *pd = &d, *pe = &e, *pf = &f;
@@ -56,8 +56,14 @@ int main()
 
     print_list(list);
 
-    Node *pout;
-    printf(search_list(list, pf, &pout) ? "True" : "False");
+    Node *pOut;
+    printf(search_list(list, pf, &pOut) ? "True\n" : "False\n");
+
+    bool is_reversed = reverse_list(list);
+
+    printf(is_reversed ? "True\n" : "False\n");
+
+    print_list(list);
 
     return 0;
 }

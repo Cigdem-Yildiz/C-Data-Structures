@@ -15,7 +15,7 @@ typedef struct LinkedList
     int (*deconstructor)(void *);
 } LList;
 
-LList *create_list(int (*compare)(void *arg1, void *arg2), int (*deconstructor)())
+LList *create_list(int (*compare)(void *arg1, void *arg2), int (*deconstructor)(void *))
 {
     LList *list = (LList *)malloc(sizeof(LList));
     if (!list)
@@ -33,7 +33,7 @@ Node *append(LList *list, void *data, int index)
     Node *node = (Node *)malloc(sizeof(Node));
 
     if (!list || !node || index > list->count || index < 0)
-        return 0;
+        return NULL;
 
     node->dataPtr = data;
 
@@ -47,7 +47,7 @@ Node *append(LList *list, void *data, int index)
     node->next = *ite;
     *ite = node;
 
-    list->count++;
+    list->count = list->count + 1;
 
     return node;
 }
@@ -114,7 +114,7 @@ bool delete_node(LList *list, void *arg)
     if (!found || !_delete(list, &pPre, &pLoc))
         return false;
 
-    list->count--;
+    list->count -= 1;
 
     return true;
 }
@@ -133,12 +133,36 @@ bool is_empty(LList *list)
 
 int list_count(LList *list)
 {
-    if (!is_empty)
+    if (is_empty)
         return list->count;
     else
         return 0;
 }
 
-void reverse_list(LList *list)
+bool reverse_list(LList *list)
 {
+    if (!list)
+        return false;
+
+    if (list->count == 0)
+    {
+        return true;
+    }
+
+    Node *pPre = NULL, *pLoc = list->head, *pNext = NULL;
+
+    while (pLoc)
+    {
+        pNext = pLoc->next;
+        pLoc->next = pPre;
+        pPre = pLoc;
+        pLoc = pNext;
+        if (!pLoc)
+        {
+            list->head = pPre;
+            break;
+        }
+    }
+
+    return true;
 }
