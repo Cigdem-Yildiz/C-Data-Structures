@@ -15,8 +15,9 @@ C-Data-Structures/
 │   └── dynamic_array.h
 ├── linked-list/            # Singly Linked List
 │   ├── linked_list_implementation/
-│   │   ├── linked_list_imp_lib.h
-│   │   └── linked_list.c
+│   │   ├── linked_list.c
+│   │   ├── linked_list.h
+│   │   └── test_linked_list.c
 │   ├── node_trial/
 │   │   ├── node_lib.h
 │   │   └── node.c
@@ -26,6 +27,8 @@ C-Data-Structures/
 │   │   ├── stack.h
 │   │   └── main.c          # Test file for Stack
 │   └──  linked_list_based_implementation/
+│   │   ├── stack.c
+│   │   └── stack.h
 ├── .gitignore
 └── README.md
 ```

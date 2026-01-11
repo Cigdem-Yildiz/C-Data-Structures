@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include "linked_list_imp_lib.h"
+#include <stdbool.h>
+#include "linked_list.h"
 
 int compare(void *arg1, void *arg2)
 {
