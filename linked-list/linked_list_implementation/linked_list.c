@@ -12,11 +12,11 @@ typedef struct LinkedList
 {
     Node *head;
     int count;
-    int (*compare)(void *arg1, void *arg2);
+    // int (*compare)(void *arg1, void *arg2);
     int (*deconstructor)(void *);
 } LList;
 
-LList *create_list(int (*compare)(void *arg1, void *arg2), int (*deconstructor)(void *))
+LList *create_list(int (*deconstructor)(void *))
 {
     LList *list = (LList *)malloc(sizeof(LList));
     if (!list)
@@ -24,7 +24,7 @@ LList *create_list(int (*compare)(void *arg1, void *arg2), int (*deconstructor)(
 
     list->count = 0;
     list->head = NULL;
-    list->compare = compare;
+    // list->compare = compare;
     list->deconstructor = deconstructor;
     return list;
 }

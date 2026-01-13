@@ -22,21 +22,21 @@ int free_data(void *arg)
 
 void print_list(LList *list)
 {
-    Node *pWalk = list->head;
-    while (pWalk != NULL)
+    Node *pTemp = list->head;
+    while (pTemp != NULL)
     {
-        int *veri = (int *)pWalk->dataPtr;
+        int *data = (int *)pTemp->dataPtr;
 
-        printf("[%d] -> ", *veri);
+        printf("[%d] -> ", *data);
 
-        pWalk = pWalk->next;
+        pTemp = pTemp->next;
     }
     printf("NULL\n");
 }
 
 int main()
 {
-    LList *list = create_list(compare, free_data);
+    LList *list = create_list(free_data);
 
     int a = 0, b = 1, c = 2, d = 3, e = 4, f = 5;
     void *pa = &a, *pb = &b, *pc = &c, *pd = &d, *pe = &e, *pf = &f;
