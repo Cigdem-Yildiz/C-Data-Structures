@@ -120,6 +120,17 @@ bool delete_node(LList *list, void *arg)
     return true;
 }
 
+bool delete_first_node(LList *list)
+{
+    Node *pPre = NULL;
+    if (!_delete(list, &pPre, &list->head))
+        return false;
+
+    list->count--;
+
+    return true;
+}
+
 bool destroy_list(LList *list)
 {
 }
@@ -158,6 +169,7 @@ bool reverse_list(LList *list)
         pLoc->next = pPre;
         pPre = pLoc;
         pLoc = pNext;
+
         if (!pLoc)
         {
             list->head = pPre;

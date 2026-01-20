@@ -1,3 +1,4 @@
+#include <stdbool.h>
 typedef struct Node
 {
     void *dataPtr;
@@ -12,13 +13,14 @@ typedef struct LinkedList
     int (*deconstructor)(void *);
 } LList;
 
-LList *create_list(int (*deconstructor)(void *)) {}
-Node *append(LList *, void *, int) {}
-bool _search(LList *, void *, Node **, Node **) {}
-bool search_list(LList *, void *, Node **) {}
-bool _delete(LList *, Node **, Node **) {}
-bool delete_node(LList *, void *) {}
-bool destroy_list(LList *) {}
-bool is_empty(LList *) {}
-int list_count(LList *) {}
-bool reverse_list(LList *) {}
+LList *create_list(int (*deconstructor)(void *));
+Node *append(LList *, void *, int);
+bool _search(LList *, void *, Node **, Node **);
+bool search_list(LList *, void *, Node **);
+bool _delete(LList *, Node **, Node **);
+bool delete_node(LList *, void *);
+bool delete_first_node(LList *);
+bool destroy_list(LList *);
+bool is_empty(LList *);
+int list_count(LList *);
+bool reverse_list(LList *);

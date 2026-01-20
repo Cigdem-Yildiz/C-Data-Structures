@@ -66,5 +66,8 @@ int main()
 
     print_list(list);
 
+    delete_first_node(list);
+    print_list(list);
+
     return 0;
 }
