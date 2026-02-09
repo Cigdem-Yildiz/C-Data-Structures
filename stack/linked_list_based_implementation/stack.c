@@ -8,13 +8,14 @@ Stack *createStack(int (*deconstructor)(void *))
     if (!stack)
         return NULL;
 
-    stack->top = stack->list->head;
     LList *list = create_list(deconstructor);
 
     if (!list)
         return NULL;
 
     stack->list = list;
+
+    stack->top = stack->list->head;
 
     return stack;
 }
@@ -50,7 +51,7 @@ void *top(Stack *stack)
     if (!stack->top)
         return NULL;
 
-    return stack->list->head;
+    return stack->list->head->dataPtr;
 }
 void destroyStack(Stack *stack)
 {
