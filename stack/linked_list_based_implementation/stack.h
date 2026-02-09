@@ -10,4 +10,4 @@ Stack *createStack(int (*deconstructor)(void *));
 int pop(Stack *);
 int push(Stack *, void *);
 void *top(Stack *);
-void destroyStack(Stack *);
+int destroyStack(Stack *);

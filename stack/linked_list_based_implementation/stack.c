@@ -53,6 +53,19 @@ void *top(Stack *stack)
 
     return stack->list->head->dataPtr;
 }
-void destroyStack(Stack *stack)
+int destroyStack(Stack *stack)
 {
+    if (!stack)
+        return 0;
+    if (stack->top)
+    {
+        free(stack);
+        return 1;
+    }
+
+    if (!destroy_list(stack->list))
+        return false;
+    free(stack);
+
+    return true;
 }

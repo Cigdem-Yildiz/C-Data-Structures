@@ -95,13 +95,18 @@ bool search_list(LList *list, void *arg, Node **outNode)
 
 bool _delete(LList *list, Node **pPre, Node **pLoc)
 {
-    if (!(*pPre))
-    {
-        list->head = (*pLoc)->next;
-        return true;
-    }
+    if (!list)
+        return false;
+    if (!(*pLoc))
+        return false;
 
-    (*pPre)->next = (*pLoc)->next;
+    if (!(*pPre))
+        list->head = (*pLoc)->next;
+    else
+        (*pPre)->next = (*pLoc)->next;
+
+    list->deconstructor((*pLoc)->dataPtr);
+    free(pLoc);
 
     return true;
 }
