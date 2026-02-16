@@ -1,5 +1,6 @@
 #include "stack.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 Stack *createStack(int (*deconstructor)(void *))
 {
@@ -36,10 +37,11 @@ int push(Stack *stack, void *pArg)
     if (!stack)
         return 0;
 
-    if (!append(stack->list, pArg, 0))
+    Node *node = append(stack->list, pArg, 0);
+    if (!node)
         return 0;
 
-    stack->top++;
+    stack->top = node;
 
     return 1;
 }
@@ -53,19 +55,22 @@ void *top(Stack *stack)
 
     return stack->list->head->dataPtr;
 }
-int destroyStack(Stack *stack)
+bool destroyStack(Stack *stack)
 {
     if (!stack)
-        return 0;
-    if (stack->top)
+        return false;
+
+    if (!stack->top)
     {
         free(stack);
-        return 1;
+        return true;
     }
 
     if (!destroy_list(stack->list))
         return false;
+
     free(stack);
+    stack = NULL;
 
     return true;
 }

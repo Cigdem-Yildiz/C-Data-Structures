@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include <stdbool.h>
 #include "linked_list.h"
 
@@ -138,6 +139,34 @@ bool delete_first_node(LList *list)
 
 bool destroy_list(LList *list)
 {
+    printf("destroy list\n");
+    if (!list)
+        return false;
+
+    if (list->count == 0)
+    {
+        free(list);
+        return true;
+    }
+
+    if (!list->deconstructor)
+        return false;
+
+    Node *pCur = list->head, *pNext = pCur;
+    while (pCur)
+    {
+        pNext = pNext->next;
+
+        list->deconstructor(pCur->dataPtr);
+        free(pCur);
+        pCur = pNext;
+    }
+
+    free(list);
+
+    // rn its pass by value so make the parameter pointer of pointer and nullify the list do the same for stack
+
+    return true;
 }
 
 bool is_empty(LList *list)
