@@ -20,36 +20,32 @@ void print_stack(Stack *stack)
 
 int main()
 {
-    printf("[DEBUG] Program baslatildi...\n");
 
     Stack *stack = createStack(free_stack);
 
     int a = 0, b = 1, c = 2, d = 3, e = 4;
     void *pa = &a, *pb = &b, *pc = &c, *pd = &d, *pe = &e;
     if (stack == NULL)
-    {
-        printf("[HATA] Stack olusturulamadi (Bellek hatasi olabilir).\n");
         return 1;
-    }
-    printf("[DEBUG] Stack basariyla olusturuldu.\n");
 
     push(stack, pa);
-    printf("[DEBUG] pa degeri eklendi.\n");
-
     push(stack, pb);
-    printf("[DEBUG] pb degeri eklendi.\n");
-
-    printf("Stack Top: %d\n", *(int *)top(stack));
-    print_stack(stack);
-
-    destroyStack(stack);
-    printf("[DEBUG] Stack temizlendi ve program bitti.\n");
-
     push(stack, pc);
     push(stack, pd);
     push(stack, pe);
 
     print_stack(stack);
+    int *top_value = (int *)top(stack);
+
+    if (top_value == NULL)
+        printf("null\n");
+
+    printf("Stack top: %d\n", *top_value);
+    printf("Stack count: %d\n", stack->list->count);
+
+    printf(destroyStack(stack) ? "True\n" : "False\n");
+    print_stack(stack);
+    printf(stack == NULL ? "Empty\n" : "Full\n");
 
     return 0;
 }
